@@ -19,6 +19,12 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.5
+  appsflyer_sdk: 
+  flutter_local_notifications: ^9.8.0+1
+  overlay_support: ^2.1.0
+  firebase_messaging: ^14.2.2
+  app_tracking_transparency: ^2.0.4
+  in_app_review:
   flutter_inappwebview: ^6.0.0
   flutter_riverpod: ^2.5.1
   flutter_screenutil: ^5.9.0
@@ -30,6 +36,7 @@ dependencies:
   riverpod: ^2.5.1
   share_plus: ^7.2.2
   shared_preferences: ^2.2.2
+  facebook_app_events: ^0.19.2
 
 dev_dependencies:
   flutter_test:

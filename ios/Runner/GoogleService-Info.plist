@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyAMhhaE5aNwG_r-JtfHmoD-cep-rHsXF7Y</string>
+	<string>AIzaSyBScYtQPS5fPJYwHsd38bqF034fzS4I4Yk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>419704691033</string>
+	<string>807903375253</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.courtside</string>
+	<string>com.tnys.sport.utils</string>
 	<key>PROJECT_ID</key>
-	<string>courtside-d061d</string>
+	<string>tony-6b449</string>
 	<key>STORAGE_BUCKET</key>
-	<string>courtside-d061d.appspot.com</string>
+	<string>tony-6b449.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:419704691033:ios:657520a870da11df54d448</string>
+	<string>1:807903375253:ios:234aceff67c7a36727909c</string>
 </dict>
 </plist>
