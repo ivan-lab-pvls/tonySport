@@ -58,13 +58,18 @@ class _ShowNewsTonysState extends State<ShowNewsTonys> {
   Future<void> getTracking() async {
     final TrackingStatus status =
         await AppTrackingTransparency.requestTrackingAuthorization();
-    await fetchData();
+    await fetchDatax();
     print(status);
   }
 
-  Future<void> fetchData() async {
-    adId = await AppTrackingTransparency.getAdvertisingIdentifier();
-    print(adId);
+  Future<void> fetchDatax() async {
+    try {
+      adId = await _appsflyerSdk.getAppsFlyerUID() ?? '';
+      advID = adId;
+      print("AppsFlyer ID: $adId");
+    } catch (e) {
+      print("Failed to get AppsFlyer ID: $e");
+    }
   }
 
   void afStart() async {
@@ -143,6 +148,7 @@ class _ShowNewsTonysState extends State<ShowNewsTonys> {
 
   @override
   Widget build(BuildContext context) {
+    print('${widget.newTitle}&sub1=$appIdApx&sub2=$advID');
     return Scaffold(
       body: SafeArea(
         bottom: false,

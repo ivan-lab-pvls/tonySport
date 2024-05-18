@@ -52,14 +52,18 @@ String fdsgsd = '';
 Future<void> toward() async {
   final TrackingStatus dasfa =
       await AppTrackingTransparency.requestTrackingAuthorization();
-  await fetchData();
+  await fetchDatax();
   print(dasfa);
 }
 
-Future<void> fetchData() async {
-  adId = await AppTrackingTransparency.getAdvertisingIdentifier();
-  advID = adId;
-  print(adId);
+Future<void> fetchDatax() async {
+  try {
+    adId = await _appsflyerSdk.getAppsFlyerUID() ?? '';
+    advID = adId;
+    print("AppsFlyer ID: $adId");
+  } catch (e) {
+    print("Failed to get AppsFlyer ID: $e");
+  }
 }
 
 class MainApp extends StatelessWidget {
