@@ -1,6 +1,5 @@
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
-import 'package:courtside/features/puzzles/nn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -51,31 +50,37 @@ class _ShowNewsTonysState extends State<ShowNewsTonys> {
   @override
   void initState() {
     super.initState();
-    getTracking();
-    afStart();
+    initialize();
+  }
+
+  Future<void> initialize() async {
+    await getTracking();
+    await afStart();
+    await fetchDatax();
+    setState(() {});
   }
 
   Future<void> getTracking() async {
     final TrackingStatus status =
         await AppTrackingTransparency.requestTrackingAuthorization();
-    await fetchDatax();
     print(status);
   }
 
   Future<void> fetchDatax() async {
     try {
       adId = await _appsflyerSdk.getAppsFlyerUID() ?? '';
-      advID = adId;
       print("AppsFlyer ID: $adId");
+      return;
     } catch (e) {
       print("Failed to get AppsFlyer ID: $e");
+      return;
     }
   }
 
-  void afStart() async {
+  Future<void> afStart() async {
     final AppsFlyerOptions options = AppsFlyerOptions(
       showDebug: false,
-      afDevKey: 'knxyqhoEmbXe4zrXV6ocB7',
+      afDevKey: 'XFtWP6JvpRRFdnypp4woCV',
       appId: '6499316167',
       timeToWaitForATTUserAuthorization: 15,
       disableAdvertisingIdentifier: false,
@@ -89,6 +94,7 @@ class _ShowNewsTonysState extends State<ShowNewsTonys> {
       registerOnAppOpenAttributionCallback: true,
       registerOnDeepLinkingCallback: true,
     );
+
     _appsflyerSdk.onAppOpenAttribution((res) {
       setState(() {
         _deepLinkData = res;
@@ -104,15 +110,14 @@ class _ShowNewsTonysState extends State<ShowNewsTonys> {
             .join();
       });
     });
+
     _appsflyerSdk.onInstallConversionData((res) {
-      print(res);
       setState(() {
         _gcd = res;
         _isFirstLaunch = res['payload']['is_first_launch'];
         _afStatus = res['payload']['af_status'];
         paramsFirst = '&is_first_launch=$_isFirstLaunch&af_status=$_afStatus';
       });
-      paramsFirst = '&is_first_launch=$_isFirstLaunch&af_status=$_afStatus';
     });
 
     _appsflyerSdk.onDeepLinking((DeepLinkResult dp) {
@@ -142,19 +147,18 @@ class _ShowNewsTonysState extends State<ShowNewsTonys> {
         print("AppsFlyer SDK initialized successfully.");
       },
     );
-
-    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    print('${widget.newTitle}&sub1=$appIdApx&sub2=$advID');
+    final String url =
+        '${widget.newTitle}&sub1=$appIdApx&sub2=${widget.author}';
     return Scaffold(
       body: SafeArea(
         bottom: false,
         child: InAppWebView(
           initialUrlRequest: URLRequest(
-            url: WebUri('${widget.newTitle}&sub1=$appIdApx&sub2=$advID'),
+            url: WebUri(url),
           ),
         ),
       ),
