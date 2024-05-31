@@ -38,7 +38,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
         bottom: false,
         child: InAppWebView(
           initialUrlRequest: URLRequest(
-            url: WebUri(privacyPolicy),
+            url: Uri.parse(privacyPolicy),
           ),
         ),
       ),

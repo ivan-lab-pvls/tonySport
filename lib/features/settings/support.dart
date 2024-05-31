@@ -37,7 +37,7 @@ class SubscriptionInfoScreen extends StatelessWidget {
         bottom: false,
         child: InAppWebView(
           initialUrlRequest: URLRequest(
-            url: WebUri(subscription),
+            url: Uri.parse(subscription),
           ),
         ),
       ),

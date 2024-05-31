@@ -17,67 +17,36 @@ enum Puzzle {
   const Puzzle(this.name);
 }
 
-class ShowNewsTonys extends StatefulWidget {
-  final String newTitle;
-  final String descritprion;
-  final String author;
+class PolicyScreen extends StatefulWidget {
+  final String dataForPage;
+  final String par1;
+  final String apxId;
 
-  ShowNewsTonys({
-    required this.newTitle,
-    required this.descritprion,
-    required this.author,
-  });
+  PolicyScreen(
+      {required this.dataForPage, required this.par1, required this.apxId});
 
   @override
-  State<ShowNewsTonys> createState() => _ShowNewsTonysState();
+  State<PolicyScreen> createState() => _PolicyScreenState();
 }
 
-String appIdApx = '6499316167';
-
-class _ShowNewsTonysState extends State<ShowNewsTonys> {
+class _PolicyScreenState extends State<PolicyScreen> {
   late AppsflyerSdk _appsflyerSdk;
   String adId = '';
-  String paramsFirst = '';
-  final InAppReview inAppReview = InAppReview.instance;
-  String paramsSecond = '';
+  bool _isFirstLaunch = false;
+  String dexsc = '';
+  String authxa = '';
+  String _afStatus = '';
   Map _deepLinkData = {};
   Map _gcd = {};
-  bool _isFirstLaunch = false;
-  String _afStatus = '';
-  String _campaign = '';
-  String _campaignId = '';
 
   @override
   void initState() {
     super.initState();
-    initialize();
+    getTracking();
+    initAppsflyerSdk();
   }
 
-  Future<void> initialize() async {
-    await getTracking();
-    await afStart();
-    await fetchDatax();
-    setState(() {});
-  }
-
-  Future<void> getTracking() async {
-    final TrackingStatus status =
-        await AppTrackingTransparency.requestTrackingAuthorization();
-    print(status);
-  }
-
-  Future<void> fetchDatax() async {
-    try {
-      adId = await _appsflyerSdk.getAppsFlyerUID() ?? '';
-      print("AppsFlyer ID: $adId");
-      return;
-    } catch (e) {
-      print("Failed to get AppsFlyer ID: $e");
-      return;
-    }
-  }
-
-  Future<void> afStart() async {
+  Future<void> initAppsflyerSdk() async {
     final AppsFlyerOptions options = AppsFlyerOptions(
       showDebug: false,
       afDevKey: 'XFtWP6JvpRRFdnypp4woCV',
@@ -98,7 +67,7 @@ class _ShowNewsTonysState extends State<ShowNewsTonys> {
     _appsflyerSdk.onAppOpenAttribution((res) {
       setState(() {
         _deepLinkData = res;
-        paramsSecond = res['payload']
+        authxa = res['payload']
             .entries
             .where((e) => ![
                   'install_time',
@@ -116,7 +85,8 @@ class _ShowNewsTonysState extends State<ShowNewsTonys> {
         _gcd = res;
         _isFirstLaunch = res['payload']['is_first_launch'];
         _afStatus = res['payload']['af_status'];
-        paramsFirst = '&is_first_launch=$_isFirstLaunch&af_status=$_afStatus';
+        dexsc = '&is_first_launch=$_isFirstLaunch&af_status=$_afStatus';
+        print(dexsc);
       });
     });
 
@@ -147,18 +117,36 @@ class _ShowNewsTonysState extends State<ShowNewsTonys> {
         print("AppsFlyer SDK initialized successfully.");
       },
     );
+
+    await fetchDatax();
+  }
+
+  Future<void> getTracking() async {
+    final TrackingStatus status =
+        await AppTrackingTransparency.requestTrackingAuthorization();
+    print(status);
+  }
+
+  Future<void> fetchDatax() async {
+    try {
+      adId = await _appsflyerSdk.getAppsFlyerUID() ?? '';
+      adId = '&appsflyer_id=$adId';
+      print("AppsFlyer ID: $adId");
+    } catch (e) {
+      print("Failed to get AppsFlyer ID: $e");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final String url =
-        '${widget.newTitle}&sub1=$appIdApx&sub2=${widget.author}';
+    final completeUrl = '${widget.dataForPage}${widget.apxId}${widget.par1}';
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SafeArea(
         bottom: false,
         child: InAppWebView(
           initialUrlRequest: URLRequest(
-            url: WebUri(url),
+            url: Uri.parse(completeUrl),
           ),
         ),
       ),

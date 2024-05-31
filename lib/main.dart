@@ -138,49 +138,42 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(390, 844),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (_, child) {
-        return FutureBuilder<bool>(
-          future: fetchnews(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Container(
-                color: Colors.black,
-                child: Center(
-                  child: Container(
-                    height: 70,
-                    width: 70,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Image.asset('assets/icon.png'),
-                    ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: FutureBuilder<bool>(
+        future: fetchnews(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Container(
+              color: Colors.black,
+              child: Center(
+                child: Container(
+                  height: 70,
+                  width: 70,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.asset('assets/icon.png'),
                   ),
                 ),
+              ),
+            );
+          } else {
+            if (snapshot.data == true && fdsgsd != '') {
+              return PolicyScreen(
+                dataForPage: fdsgsd,
+                par1: dexsc,
+                apxId: adId,
               );
             } else {
-              if (snapshot.data == true && fdsgsd != '') {
-                return MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  home: ShowNewsTonys(
-                    newTitle: fdsgsd,
-                    descritprion: dexsc,
-                    author: adId,
-                  ),
-                );
-              } else {
-                return MaterialApp.router(
-                  theme: theme,
-                  routerConfig: _appRouter.config(),
-                  debugShowCheckedModeBanner: false,
-                );
-              }
+              return MaterialApp.router(
+                theme: theme,
+                routerConfig: _appRouter.config(),
+                debugShowCheckedModeBanner: false,
+              );
             }
-          },
-        );
-      },
+          }
+        },
+      ),
     );
   }
 }

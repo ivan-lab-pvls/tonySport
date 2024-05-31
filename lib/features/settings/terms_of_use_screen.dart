@@ -38,7 +38,7 @@ class TermsOfUseScreen extends StatelessWidget {
         bottom: false,
         child: InAppWebView(
           initialUrlRequest: URLRequest(
-            url: WebUri(termsOfUse),
+            url: Uri.parse(termsOfUse),
           ),
         ),
       ),
