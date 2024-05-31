@@ -165,11 +165,17 @@ class MainApp extends StatelessWidget {
                 apxId: adId,
               );
             } else {
-              return MaterialApp.router(
-                theme: theme,
-                routerConfig: _appRouter.config(),
-                debugShowCheckedModeBanner: false,
-              );
+              return ScreenUtilInit(
+                  designSize: const Size(390, 844),
+                  minTextAdapt: true,
+                  splitScreenMode: true,
+                  builder: (_, child) {
+                    return MaterialApp.router(
+                      theme: theme,
+                      routerConfig: _appRouter.config(),
+                      debugShowCheckedModeBanner: false,
+                    );
+                  });
             }
           }
         },

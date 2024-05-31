@@ -14,13 +14,13 @@ final theme = ThemeData(
     bodyMedium: TextStyle(
       color: const Color.fromRGBO(250, 250, 250, 0.4),
       fontWeight: FontWeight.w500,
-      fontSize: 16.sp,
+      fontSize: 16,
       inherit: false,
     ),
     bodySmall: TextStyle(
       color: const Color.fromRGBO(250, 250, 250, 0.4),
       fontWeight: FontWeight.w500,
-      fontSize: 14.sp,
+      fontSize: 14,
       inherit: false,
     ),
   ),
